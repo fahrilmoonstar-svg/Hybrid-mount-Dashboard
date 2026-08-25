@@ -1,0 +1,18 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #f0f6fc;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
