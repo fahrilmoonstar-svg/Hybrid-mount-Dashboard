@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybrid Mount Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>🔧 Hybrid Mount Dashboard</h1>
+      <nav>
+        <button class="tab-btn active" data-tab="modules">📦 Modules</button>
+        <button class="tab-btn" data-tab="traffic">🚦 Traffic Light</button>
+        <button class="tab-btn" data-tab="blacklist">🚫 Blacklist</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- TAB 1: Modules -->
+      <section id="modules" class="tab-content active">
+        <h2>📦 Installed Modules</h2>
+        <div id="moduleList" class="grid">
+          <!-- Diisi oleh JavaScript -->
+        </div>
+      </section>
+
+      <!-- TAB 2: Traffic Light -->
+      <section id="traffic" class="tab-content">
+        <h2>🚦 Simulasi Lampu Lalu Lintas</h2>
+        <div class="traffic-container">
+          <div class="traffic-light" id="trafficLight">
+            <div class="light" id="light"></div>
+          </div>
+          <div class="status" id="statusMessage">✅ Jalan!</div>
+          <div class="controls">
+            <button class="btn red" data-color="merah">🔴 Merah</button>
+            <button class="btn yellow" data-color="kuning">🟡 Kuning</button>
+            <button class="btn green" data-color="hijau">🟢 Hijau</button>
+          </div>
+          <button class="auto-btn" id="autoCycle">🔄 Auto Cycle (6x)</button>
+        </div>
+      </section>
+
+      <!-- TAB 3: Blacklist -->
+      <section id="blacklist" class="tab-content">
+        <h2>🚫 Global Blacklist</h2>
+        <ul id="blacklistList" class="blacklist">
+          <!-- Diisi oleh JavaScript -->
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      Hybrid Mount v6.0.0 — Vanilla JS
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
