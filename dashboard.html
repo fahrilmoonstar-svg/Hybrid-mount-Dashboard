@@ -15,6 +15,7 @@
           <button class="tab-btn active" data-tab="modules">📦 Modules</button>
           <button class="tab-btn" data-tab="traffic">🚦 Traffic Light</button>
           <button class="tab-btn" data-tab="blacklist">🚫 Blacklist</button>
+          <button class="tab-btn" data-tab="clan">🏴‍☠️ Clan</button> <!-- TAB BARU -->
           <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: #ffd369; color: #ffd369;">
             🔄 Log Modules
           </button>
@@ -24,11 +25,13 @@
     </header>
 
     <main>
+      <!-- TAB 1: Modules -->
       <section id="modules" class="tab-content active">
         <h2>📦 Installed Modules</h2>
         <div id="moduleList" class="grid"></div>
       </section>
 
+      <!-- TAB 2: Traffic Light -->
       <section id="traffic" class="tab-content">
         <h2>🚦 Simulasi Lampu Lalu Lintas</h2>
         <div class="traffic-container">
@@ -45,9 +48,50 @@
         </div>
       </section>
 
+      <!-- TAB 3: Blacklist -->
       <section id="blacklist" class="tab-content">
         <h2>🚫 Global Blacklist</h2>
         <ul id="blacklistList" class="blacklist"></ul>
+      </section>
+
+      <!-- TAB 4: Clan (BARU) -->
+      <section id="clan" class="tab-content">
+        <h2>🏴‍☠️ Clan Baru</h2>
+        <div id="clanContainer" style="
+          background: #161b22;
+          border: 1px solid #ffd369;
+          border-radius: 12px;
+          padding: 2rem;
+          text-align: center;
+        ">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">🏴‍☠️</div>
+          <h3 style="color: #f0f6fc; font-size: 1.8rem; margin-bottom: 0.5rem;">
+            Nama Clan: <span id="clanName" style="color: #ffd369;">-</span>
+          </h3>
+          <p style="color: #8b949e; font-size: 1rem;">
+            Tag: <span id="clanTag" style="color: #58a6ff;">-</span>
+          </p>
+          <p style="color: #8b949e; font-size: 1rem;">
+            Anggota: <span id="clanMembers" style="color: #3fb950;">-</span> orang
+          </p>
+          <p style="color: #8b949e; font-size: 1rem;">
+            Rank: <span id="clanRank" style="color: #ffbb00;">-</span>
+          </p>
+          <p style="color: #8b949e; font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
+            "Bersama kita kuat! 💪"
+          </p>
+          <button id="editClanBtn" style="
+            margin-top: 1.5rem;
+            padding: 0.6rem 1.5rem;
+            background: #ffd369;
+            color: #0d1117;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+          ">✏️ Edit Clan</button>
+        </div>
       </section>
     </main>
 
