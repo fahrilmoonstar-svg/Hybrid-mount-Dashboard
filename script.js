@@ -59,12 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
 
-// ================================================================
-// DASHBOARD
-// ================================================================
-document.addEventListener('DOMContentLoaded', () => {
+  // ================================================================
+  // DASHBOARD
+  // ================================================================
   // Cek session: kalo belum login, balik ke halaman login
   if (window.location.pathname.includes('dashboard.html')) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
@@ -213,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ========== TAB NAVIGATION ==========
   function setupTabs() {
-    const tabs = document.querySelectorAll('.tab-btn');
+    const tabs = document.querySelectorAll('.tab-btn:not(#loopModulesBtn)');
     const contents = {
       modules: document.getElementById('modules'),
       traffic: document.getElementById('traffic'),
@@ -232,6 +230,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ========== LOOP MODULES (FITUR BARU) ==========
+  function logModulesToConsole() {
+    console.log('%c📦 Daftar Module (via Loop)', 'font-size: 16px; font-weight: bold; color: #58a6ff;');
+    console.log('=' .repeat(40));
+    
+    for (let i = 0; i < dummyModules.length; i++) {
+      const mod = dummyModules[i];
+      const statusIcon = mod.status === 'active' ? '✅' :
+                         mod.status === 'inactive' ? '⏸️' :
+                         '🚫';
+      console.log(`${i+1}. ${statusIcon} ${mod.name} (${mod.status}) — v${mod.version} by ${mod.author}`);
+    }
+    
+    console.log('=' .repeat(40));
+    console.log(`✅ Total module: ${dummyModules.length}`);
+    
+    // Tampilkan notifikasi di halaman
+    const msgEl = document.createElement('div');
+    msgEl.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0d1117;
+      border: 1px solid #58a6ff;
+      border-radius: 8px;
+      padding: 12px 20px;
+      color: #f0f6fc;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      z-index: 999;
+      animation: fadeIn 0.5s ease;
+    `;
+    msgEl.textContent = `✅ ${dummyModules.length} module telah di-log ke console!`;
+    document.body.appendChild(msgEl);
+    
+    setTimeout(() => {
+      msgEl.style.opacity = '0';
+      msgEl.style.transition = 'opacity 0.5s';
+      setTimeout(() => msgEl.remove(), 500);
+    }, 3000);
+  }
+
   // ========== INIT DASHBOARD ==========
   if (document.getElementById('moduleList')) {
     setupTabs();
@@ -248,6 +288,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const autoBtn = document.getElementById('autoCycle');
     if (autoBtn) {
       autoBtn.addEventListener('click', autoCycle);
+    }
+
+    // Tombol Log Modules
+    const loopBtn = document.getElementById('loopModulesBtn');
+    if (loopBtn) {
+      loopBtn.addEventListener('click', logModulesToConsole);
     }
 
     // Logout button
