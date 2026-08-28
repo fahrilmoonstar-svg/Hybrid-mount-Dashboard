@@ -786,6 +786,98 @@ main {
 }
 
 /* ================================================================
+   SECURITY LOCK
+   ================================================================ */
+#securityLock {
+  background: var(--bg-card);
+  border: 2px solid var(--accent-gold);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+#securityLock:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+#lockDisplay {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-input);
+  border-radius: 50%;
+  border: 3px solid var(--border-color);
+  transition: var(--transition-smooth);
+  font-size: 4rem;
+}
+
+#lockDisplay:hover {
+  transform: scale(1.05);
+}
+
+.seg {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  transition: var(--transition-smooth);
+  cursor: default;
+  user-select: none;
+}
+
+.seg:hover {
+  transform: scale(1.05);
+}
+
+#lockInput:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 20px rgba(255, 211, 105, 0.2);
+}
+
+#lockInfo {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+  background: var(--bg-input);
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  transition: var(--transition-smooth);
+}
+
+/* ================================================================
+   CONFESSION COMPONENT
+   ================================================================ */
+#confessionContainer:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+#confessionDisplay {
+  transition: opacity 0.3s ease;
+}
+
+/* Animasi confetti */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ================================================================
    SPONSOR
    ================================================================ */
 #sponsor {
@@ -872,6 +964,20 @@ main {
   #clanContainer {
     padding: 1rem;
   }
+  
+  #securityLock {
+    padding: 1rem;
+  }
+  
+  #lockDisplay {
+    width: 150px;
+    height: 150px;
+    font-size: 3rem;
+  }
+  
+  #confessionContainer {
+    padding: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -889,5 +995,11 @@ main {
   .tab-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
+  }
+  
+  #lockDisplay {
+    width: 120px;
+    height: 120px;
+    font-size: 2.5rem;
   }
 }

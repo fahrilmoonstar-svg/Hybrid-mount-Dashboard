@@ -17,6 +17,8 @@
           <button class="tab-btn" data-tab="blacklist">🚫 Blacklist</button>
           <button class="tab-btn" data-tab="clan">🏴‍☠️ Clan</button>
           <button class="tab-btn" data-tab="otp">🔐 OTP</button>
+          <button class="tab-btn" data-tab="security">🔒 Security</button>
+          <button class="tab-btn" data-tab="confession">💌 Confession</button>
           <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: var(--accent-gold); color: var(--accent-gold);">
             🔄 Log Modules
           </button>
@@ -129,6 +131,189 @@
           </div>
 
           <div id="otpSpark"></div>
+        </div>
+      </section>
+
+      <!-- TAB 6: Security Lock -->
+      <section id="security" class="tab-content">
+        <h2>🔒 Security Lock</h2>
+        <div id="securityLock">
+          <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+            🔒 Keamanan Password
+          </h3>
+          
+          <div style="
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-input);
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+            transition: var(--transition-smooth);
+            font-size: 4rem;
+          " id="lockDisplay">
+            📎
+          </div>
+          
+          <div style="
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+          ">
+            <span class="seg" data-tier="1" style="
+              padding: 0.3rem 0.8rem;
+              border-radius: 12px;
+              font-size: 0.7rem;
+              font-weight: 600;
+              background: var(--bg-input);
+              border: 1px solid var(--border-color);
+              color: var(--text-secondary);
+              transition: var(--transition-smooth);
+              cursor: default;
+            ">📎 Paperclip</span>
+            <span class="seg" data-tier="2" style="
+              padding: 0.3rem 0.8rem;
+              border-radius: 12px;
+              font-size: 0.7rem;
+              font-weight: 600;
+              background: var(--bg-input);
+              border: 1px solid var(--border-color);
+              color: var(--text-secondary);
+              transition: var(--transition-smooth);
+              cursor: default;
+            ">🔒 Padlock</span>
+            <span class="seg" data-tier="3" style="
+              padding: 0.3rem 0.8rem;
+              border-radius: 12px;
+              font-size: 0.7rem;
+              font-weight: 600;
+              background: var(--bg-input);
+              border: 1px solid var(--border-color);
+              color: var(--text-secondary);
+              transition: var(--transition-smooth);
+              cursor: default;
+            ">🔩 Deadbolt</span>
+            <span class="seg" data-tier="4" style="
+              padding: 0.3rem 0.8rem;
+              border-radius: 12px;
+              font-size: 0.7rem;
+              font-weight: 600;
+              background: var(--bg-input);
+              border: 1px solid var(--border-color);
+              color: var(--text-secondary);
+              transition: var(--transition-smooth);
+              cursor: default;
+            ">🏦 Vault</span>
+          </div>
+          
+          <div style="margin-bottom: 1rem;">
+            <input type="text" id="lockInput" placeholder="Ketik sesuatu untuk mengukur kekuatan..." style="
+              padding: 0.6rem 1rem;
+              background: var(--bg-input);
+              border: 2px solid var(--border-color);
+              border-radius: 8px;
+              color: var(--text-primary);
+              font-size: 1rem;
+              width: 80%;
+              max-width: 300px;
+              outline: none;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            ">
+          </div>
+          
+          <div style="
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            background: var(--bg-input);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+          ">
+            <span id="lockInfo">🔹 Ketik sesuatu untuk mengukur kekuatan</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: Confession -->
+      <section id="confession" class="tab-content">
+        <h2>💌 Confession</h2>
+        <div id="confessionContainer" style="
+          background: var(--bg-card);
+          border: 2px solid var(--accent-gold);
+          border-radius: var(--border-radius);
+          padding: 2rem;
+          max-width: 500px;
+          margin: 0 auto;
+          text-align: center;
+          transition: var(--transition-smooth);
+        ">
+          <h3 style="color: var(--text-primary); margin-bottom: 1.5rem;">
+            💌 Confession
+          </h3>
+          
+          <div id="confessionDisplay" style="
+            font-size: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-input);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed var(--border-color);
+          ">
+            💬 Klik tombol di bawah untuk confess!
+          </div>
+          
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <button onclick="handleConfess('Aku suka sama kamu')" style="
+              padding: 0.8rem 2rem;
+              background: var(--gradient-primary);
+              color: #fff;
+              border: none;
+              border-radius: 10px;
+              font-size: 1rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              💖 Confess!
+            </button>
+            
+            <button onclick="handleConfess('Aku cuma mau temenan')" style="
+              padding: 0.8rem 2rem;
+              background: var(--bg-input);
+              color: var(--text-secondary);
+              border: 1px solid var(--border-color);
+              border-radius: 10px;
+              font-size: 1rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.borderColor='var(--accent-gold)'" onmouseout="this.style.borderColor='var(--border-color)'">
+              🤝 Temenan aja
+            </button>
+          </div>
+          
+          <div id="confessionResult" style="
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "></div>
         </div>
       </section>
 

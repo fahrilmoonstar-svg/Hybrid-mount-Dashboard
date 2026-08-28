@@ -204,6 +204,263 @@ document.addEventListener('DOMContentLoaded', () => {
     status.style.color = '#8b949e';
   };
 
+  // ========== SECURITY LOCK COMPONENT ==========
+  const LOCK_TIERS = [
+    { tier: 1, icon: '📎', label: 'Paperclip', minBits: 0, maxBits: 29 },
+    { tier: 2, icon: '🔒', label: 'Padlock', minBits: 30, maxBits: 49 },
+    { tier: 3, icon: '🔩', label: 'Deadbolt', minBits: 50, maxBits: 69 },
+    { tier: 4, icon: '🏦', label: 'Vault', minBits: 70, maxBits: Infinity },
+  ];
+
+  const POOL = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+  function calculateEntropy(input) {
+    const len = input.length;
+    const poolSize = POOL.length;
+    const bits = len * Math.log2(poolSize);
+    return bits;
+  }
+
+  function getTier(bits) {
+    for (let i = 0; i < LOCK_TIERS.length; i++) {
+      if (bits >= LOCK_TIERS[i].minBits && bits <= LOCK_TIERS[i].maxBits) {
+        return LOCK_TIERS[i];
+      }
+    }
+    return LOCK_TIERS[0];
+  }
+
+  function updateLock(input) {
+    const bits = calculateEntropy(input);
+    const tier = getTier(bits);
+    
+    const display = document.getElementById('lockDisplay');
+    const info = document.getElementById('lockInfo');
+    
+    display.style.transition = 'all 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67)';
+    display.textContent = tier.icon;
+    
+    const colors = {
+      1: '#8b949e',
+      2: '#58a6ff',
+      3: '#ffbb00',
+      4: '#ffd369',
+    };
+    display.style.borderColor = colors[tier.tier] || '#30363d';
+    display.style.boxShadow = `0 0 30px ${colors[tier.tier]}33`;
+    
+    const bitsRounded = Math.round(bits * 10) / 10;
+    info.innerHTML = `
+      🔹 <strong>${tier.label}</strong> (${bitsRounded} bits entropy) — 
+      ${bitsRounded < 30 ? '⚠️ Weak' : 
+        bitsRounded < 50 ? '🔸 Moderate' : 
+        bitsRounded < 70 ? '🔹 Strong' : 
+        '🔰 Very Strong'}
+    `;
+    info.style.color = bitsRounded < 30 ? '#f85149' :
+                       bitsRounded < 50 ? '#ffbb00' :
+                       bitsRounded < 70 ? '#58a6ff' :
+                       '#3fb950';
+    
+    document.querySelectorAll('.seg').forEach(el => {
+      const tierNum = parseInt(el.dataset.tier);
+      if (tierNum <= tier.tier) {
+        el.style.background = colors[tierNum] || '#30363d';
+        el.style.color = '#0d1117';
+        el.style.borderColor = colors[tierNum] || '#30363d';
+      } else {
+        el.style.background = 'var(--bg-input)';
+        el.style.color = 'var(--text-secondary)';
+        el.style.borderColor = 'var(--border-color)';
+      }
+    });
+    
+    return tier;
+  }
+
+  function initSecurityLock() {
+    const input = document.getElementById('lockInput');
+    if (!input) return;
+    
+    let timeoutId = null;
+    input.addEventListener('input', function() {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        updateLock(this.value);
+      }, 100);
+    });
+    
+    updateLock('');
+    setTimeout(() => input.focus(), 500);
+  }
+
+  // ========== CONFESSION COMPONENT ==========
+  window.handleConfess = function(message) {
+    const display = document.getElementById('confessionDisplay');
+    const result = document.getElementById('confessionResult');
+    
+    display.style.transition = 'opacity 0.3s';
+    display.style.opacity = '0';
+    
+    setTimeout(() => {
+      display.textContent = `💬 "${message}"`;
+      display.style.opacity = '1';
+    }, 300);
+    
+    if (message === 'Aku suka sama kamu') {
+      const responses = [
+        { text: '💖 Aku juga suka sama kamu! Mau jadi pacarku?', type: 'success' },
+        { text: '💕 Aku suka kamu dari dulu, cuma gak berani ngomong', type: 'success' },
+        { text: '😳 Aku... aku juga! Tapi aku gugup banget', type: 'success' },
+      ];
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      
+      result.innerHTML = `
+        <div style="
+          padding: 1rem;
+          background: rgba(63, 185, 80, 0.1);
+          border: 2px solid var(--accent-green);
+          border-radius: var(--border-radius);
+          animation: fadeIn 0.5s ease;
+        ">
+          <span style="font-size: 2rem;">💖</span>
+          <p style="margin-top: 0.5rem;">${randomResponse.text}</p>
+          <button onclick="handleConfess('Aku mau!')" style="
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-green);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+          ">💍 Aku mau!</button>
+          <button onclick="handleConfess('Aku pikir-pikir dulu')" style="
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 0.5rem;
+          ">🤔 Pikir-pikir dulu</button>
+        </div>
+      `;
+      
+      createConfetti();
+      
+    } else if (message === 'Aku mau!') {
+      result.innerHTML = `
+        <div style="
+          padding: 1rem;
+          background: rgba(255, 211, 105, 0.1);
+          border: 2px solid var(--accent-gold);
+          border-radius: var(--border-radius);
+          animation: fadeIn 0.5s ease;
+        ">
+          <span style="font-size: 3rem;">💍</span>
+          <p style="margin-top: 0.5rem; font-size: 1.5rem; color: var(--accent-gold);">
+            YES! 💖💖💖
+          </p>
+          <p style="color: var(--text-secondary);">Selamat! Kamu berhasil! 🎉</p>
+          <button onclick="resetConfession()" style="
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+          ">🔄 Reset</button>
+        </div>
+      `;
+      
+    } else if (message === 'Aku pikir-pikir dulu') {
+      result.innerHTML = `
+        <div style="
+          padding: 1rem;
+          background: rgba(255, 187, 0, 0.1);
+          border: 2px solid var(--accent-yellow);
+          border-radius: var(--border-radius);
+          animation: fadeIn 0.5s ease;
+        ">
+          <span style="font-size: 2rem;">🤔</span>
+          <p style="margin-top: 0.5rem;">Oke, aku tunggu ya! Jangan lama-lama 😄</p>
+          <button onclick="resetConfession()" style="
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+          ">🔄 Reset</button>
+        </div>
+      `;
+      
+    } else if (message === 'Aku cuma mau temenan') {
+      result.innerHTML = `
+        <div style="
+          padding: 1rem;
+          background: rgba(88, 166, 255, 0.1);
+          border: 2px solid var(--accent-blue);
+          border-radius: var(--border-radius);
+          animation: fadeIn 0.5s ease;
+        ">
+          <span style="font-size: 2rem;">🤝</span>
+          <p style="margin-top: 0.5rem;">Oke, temenan aja! Kamu keren kok!</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Makasih udah jujur ❤️</p>
+          <button onclick="resetConfession()" style="
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+          ">🔄 Reset</button>
+        </div>
+      `;
+    }
+  };
+
+  window.resetConfession = function() {
+    const display = document.getElementById('confessionDisplay');
+    const result = document.getElementById('confessionResult');
+    
+    display.textContent = '💬 Klik tombol di bawah untuk confess!';
+    result.innerHTML = '';
+  };
+
+  function createConfetti() {
+    const colors = ['#ffd369', '#ff6b6b', '#58a6ff', '#3fb950', '#ffbb00'];
+    
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement('div');
+      confetti.style.cssText = `
+        position: fixed;
+        top: ${Math.random() * 100}%;
+        left: ${Math.random() * 100}%;
+        width: ${Math.random() * 10 + 5}px;
+        height: ${Math.random() * 10 + 5}px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        pointer-events: none;
+        z-index: 9999;
+        animation: confettiFall ${Math.random() * 2 + 1}s ease-out forwards;
+        animation-delay: ${Math.random() * 0.5}s;
+      `;
+      document.body.appendChild(confetti);
+      
+      setTimeout(() => confetti.remove(), 3000);
+    }
+  }
+
   // ========== RENDER FUNCTIONS ==========
   function renderClan() {
     const nameEl = document.getElementById('clanName');
@@ -434,6 +691,8 @@ document.addEventListener('DOMContentLoaded', () => {
       blacklist: document.getElementById('blacklist'),
       clan: document.getElementById('clan'),
       otp: document.getElementById('otp'),
+      security: document.getElementById('security'),
+      confession: document.getElementById('confession'),
     };
 
     tabs.forEach(tab => {
@@ -449,6 +708,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (tab.dataset.tab === 'otp') {
           setTimeout(initOTP, 100);
+        }
+        if (tab.dataset.tab === 'security') {
+          setTimeout(initSecurityLock, 100);
         }
       });
     });
@@ -503,6 +765,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderClan();
     renderMemberList();
     setTrafficLight('hijau');
+    initOTP();
+    initSecurityLock();
 
     document.querySelectorAll('.btn[data-color]').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -537,7 +801,5 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html';
       });
     }
-
-    initOTP();
   }
 });
