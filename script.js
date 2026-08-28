@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
     rank: 'Elite',
   };
 
-  // ========== ANGGOTA CLAN ==========
   let clanMembers = JSON.parse(localStorage.getItem('clanMembers')) || [
     "Dayang",
     "Budi",
@@ -101,17 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function initOTP() {
     const inputs = document.querySelectorAll('.otp-input');
+    if (inputs.length === 0) return;
     
-    // Fokus ke input pertama
-    if (inputs.length > 0) {
-      setTimeout(() => inputs[0].focus(), 500);
-    }
+    setTimeout(() => inputs[0].focus(), 500);
 
     inputs.forEach((input, index) => {
       input.addEventListener('input', function(e) {
         const value = e.target.value;
-        
-        // Hanya angka yang boleh
         if (value && !/^\d$/.test(value)) {
           e.target.value = '';
           return;
@@ -119,12 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         otpCode[index] = e.target.value;
         
-        // Efek spark
         const spark = document.getElementById('otpSpark');
         spark.style.opacity = '1';
         setTimeout(() => spark.style.opacity = '0', 300);
 
-        // Pindah ke input berikutnya
         if (value && index < 5) {
           inputs[index + 1].focus();
         }
@@ -132,14 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateOTPStatus();
       });
 
-      // Backspace
       input.addEventListener('keydown', function(e) {
         if (e.key === 'Backspace' && !e.target.value && index > 0) {
           inputs[index - 1].focus();
         }
       });
 
-      // Efek focus
       input.addEventListener('focus', function() {
         this.style.borderColor = '#ffd369';
         this.style.boxShadow = '0 0 20px rgba(255, 211, 105, 0.2)';
@@ -155,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateOTPStatus() {
     const status = document.getElementById('otpStatus');
     const filled = otpCode.filter(d => d !== '').length;
-    
     if (filled === 6) {
       status.innerHTML = '✅ Kode lengkap! Klik Verifikasi.';
       status.style.color = '#3fb950';
@@ -175,14 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Simulasi verifikasi (contoh: kode 123456)
     if (code === '123456') {
-      status.innerHTML = '✅✅✅ Verifikasi berhasil! Selamat datang! 🎉';
+      status.innerHTML = '✅✅✅ Verifikasi berhasil! 🎉';
       status.style.color = '#3fb950';
       
       const spark = document.getElementById('otpSpark');
-      spark.style.opacity = '1';
       spark.style.background = 'linear-gradient(90deg, transparent, #3fb950, transparent)';
+      spark.style.opacity = '1';
       setTimeout(() => {
         spark.style.opacity = '0';
         spark.style.background = 'linear-gradient(90deg, transparent, #ffd369, transparent)';
@@ -215,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     status.style.color = '#8b949e';
   };
 
-  // ========== RENDER CLAN ==========
+  // ========== RENDER FUNCTIONS ==========
   function renderClan() {
     const nameEl = document.getElementById('clanName');
     const tagEl = document.getElementById('clanTag');
@@ -228,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rankEl) rankEl.textContent = clanData.rank;
   }
 
-  // ========== EDIT CLAN ==========
   function editClan() {
     const newName = prompt('Masukkan nama clan baru:', clanData.name);
     if (newName !== null && newName.trim() !== '') {
@@ -253,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderClan();
   }
 
-  // ========== RENDER ANGGOTA CLAN ==========
   function renderMemberList() {
     const container = document.getElementById('memberList');
     if (!container) return;
@@ -292,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = html;
   }
 
-  // ========== FUNGSI ANGGOTA ==========
   function saveMembers() {
     localStorage.setItem('clanMembers', JSON.stringify(clanMembers));
   }
@@ -314,7 +300,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // ========== RENDER MODULES ==========
   function renderModules() {
     const container = document.getElementById('moduleList');
     if (!container) return;
@@ -351,7 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ========== TOGGLE BLACKLIST ==========
   function toggleBlacklist(id) {
     const index = blacklist.indexOf(id);
     if (index > -1) {
@@ -363,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderBlacklist();
   }
 
-  // ========== RENDER BLACKLIST ==========
   function renderBlacklist() {
     const container = document.getElementById('blacklistList');
     if (!container) return;
@@ -464,7 +447,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
 
-        // Inisialisasi OTP jika tab OTP diaktifkan
         if (tab.dataset.tab === 'otp') {
           setTimeout(initOTP, 100);
         }
@@ -488,7 +470,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('=' .repeat(40));
     console.log(`✅ Total module: ${dummyModules.length}`);
     
-    // Tampilkan notifikasi di halaman
     const msgEl = document.createElement('div');
     msgEl.style.cssText = `
       position: fixed;
@@ -557,7 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Inisialisasi OTP
     initOTP();
   }
 });

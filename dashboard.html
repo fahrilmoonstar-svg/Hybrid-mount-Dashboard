@@ -17,7 +17,7 @@
           <button class="tab-btn" data-tab="blacklist">🚫 Blacklist</button>
           <button class="tab-btn" data-tab="clan">🏴‍☠️ Clan</button>
           <button class="tab-btn" data-tab="otp">🔐 OTP</button>
-          <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: #ffd369; color: #ffd369;">
+          <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: var(--accent-gold); color: var(--accent-gold);">
             🔄 Log Modules
           </button>
         </nav>
@@ -58,53 +58,28 @@
       <!-- TAB 4: Clan -->
       <section id="clan" class="tab-content">
         <h2>🏴‍☠️ Clan Baru</h2>
-        <div id="clanContainer" style="
-          background: #161b22;
-          border: 1px solid #ffd369;
-          border-radius: 12px;
-          padding: 2rem;
-          text-align: center;
-        ">
+        <div id="clanContainer">
           <div style="font-size: 4rem; margin-bottom: 1rem;">🏴‍☠️</div>
-          <h3 style="color: #f0f6fc; font-size: 1.8rem; margin-bottom: 0.5rem;">
-            Nama Clan: <span id="clanName" style="color: #ffd369;">-</span>
+          <h3 style="color: var(--text-primary); font-size: 1.8rem; margin-bottom: 0.5rem;">
+            Nama Clan: <span id="clanName" style="color: var(--accent-gold);">-</span>
           </h3>
-          <p style="color: #8b949e; font-size: 1rem;">
-            Tag: <span id="clanTag" style="color: #58a6ff;">-</span>
+          <p style="color: var(--text-secondary); font-size: 1rem;">
+            Tag: <span id="clanTag" style="color: var(--accent-blue);">-</span>
           </p>
-          <p style="color: #8b949e; font-size: 1rem;">
-            Anggota: <span id="clanMembers" style="color: #3fb950;">-</span> orang
+          <p style="color: var(--text-secondary); font-size: 1rem;">
+            Anggota: <span id="clanMembers" style="color: var(--accent-green);">-</span> orang
           </p>
-          <p style="color: #8b949e; font-size: 1rem;">
-            Rank: <span id="clanRank" style="color: #ffbb00;">-</span>
+          <p style="color: var(--text-secondary); font-size: 1rem;">
+            Rank: <span id="clanRank" style="color: var(--accent-yellow);">-</span>
           </p>
-          <p style="color: #8b949e; font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem; font-style: italic;">
             "Bersama kita kuat! 💪"
           </p>
-          <button id="editClanBtn" style="
-            margin-top: 1.5rem;
-            padding: 0.6rem 1.5rem;
-            background: #ffd369;
-            color: #0d1117;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-          ">✏️ Edit Clan</button>
+          <button id="editClanBtn">✏️ Edit Clan</button>
 
-          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #30363d;">
-            <h3 style="color: #f0f6fc; margin-bottom: 1rem;">👥 Anggota Clan</h3>
-            <button id="addMemberBtn" style="
-              padding: 0.5rem 1.5rem;
-              background: #238636;
-              color: #fff;
-              border: none;
-              border-radius: 6px;
-              cursor: pointer;
-              font-weight: 600;
-              margin-bottom: 1rem;
-            ">➕ Tambah Anggota</button>
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">👥 Anggota Clan</h3>
+            <button id="addMemberBtn">➕ Tambah Anggota</button>
             <div id="memberList"></div>
           </div>
         </div>
@@ -113,173 +88,59 @@
       <!-- TAB 5: OTP -->
       <section id="otp" class="tab-content">
         <h2>🔐 Verifikasi Kode OTP</h2>
-        <div id="otpContainer" style="
-          background: #161b22;
-          border: 1px solid #ffd369;
-          border-radius: 12px;
-          padding: 2rem;
-          max-width: 500px;
-          margin: 0 auto;
-          text-align: center;
-        ">
+        <div id="otpContainer">
           <div style="font-size: 3rem; margin-bottom: 1rem;">🔑</div>
-          <p style="color: #8b949e; margin-bottom: 1.5rem;">
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
             Masukkan kode verifikasi 6 digit yang dikirim ke email/HP kamu
           </p>
           
-          <div style="display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 1.5rem;">
-            <input type="text" maxlength="1" class="otp-input" data-index="0" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
-            <input type="text" maxlength="1" class="otp-input" data-index="1" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
-            <input type="text" maxlength="1" class="otp-input" data-index="2" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
-            <span style="font-size: 2rem; color: #8b949e; display: flex; align-items: center;">—</span>
-            <input type="text" maxlength="1" class="otp-input" data-index="3" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
-            <input type="text" maxlength="1" class="otp-input" data-index="4" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
-            <input type="text" maxlength="1" class="otp-input" data-index="5" style="
-              width: 50px;
-              height: 60px;
-              text-align: center;
-              font-size: 1.5rem;
-              font-weight: 600;
-              background: #0d1117;
-              border: 2px solid #30363d;
-              border-radius: 8px;
-              color: #f0f6fc;
-              outline: none;
-              transition: border-color 0.3s, box-shadow 0.3s;
-            ">
+          <div style="display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <input type="text" maxlength="1" class="otp-input" data-index="0">
+            <input type="text" maxlength="1" class="otp-input" data-index="1">
+            <input type="text" maxlength="1" class="otp-input" data-index="2">
+            <span style="font-size: 2rem; color: var(--text-secondary); display: flex; align-items: center;">—</span>
+            <input type="text" maxlength="1" class="otp-input" data-index="3">
+            <input type="text" maxlength="1" class="otp-input" data-index="4">
+            <input type="text" maxlength="1" class="otp-input" data-index="5">
           </div>
 
-          <div id="otpStatus" style="margin-bottom: 1rem; font-size: 0.9rem; color: #8b949e;">
+          <div id="otpStatus" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
             Masukkan kode verifikasi 6 digit
           </div>
 
           <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
-            <button onclick="verifyOTP()" style="
-              padding: 0.6rem 2rem;
-              background: linear-gradient(135deg, #00aaff, #0077ff);
-              color: #fff;
-              border: none;
-              border-radius: 8px;
-              font-size: 1rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: transform 0.2s;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <button onclick="verifyOTP()" class="login-btn" style="width: auto; padding: 0.6rem 2rem;">
               ✅ Verifikasi
             </button>
             <button onclick="clearOTP()" style="
               padding: 0.6rem 2rem;
-              background: #21262d;
-              color: #8b949e;
-              border: 1px solid #30363d;
+              background: var(--bg-input);
+              color: var(--text-secondary);
+              border: 1px solid var(--border-color);
               border-radius: 8px;
               font-size: 1rem;
               font-weight: 600;
               cursor: pointer;
-              transition: transform 0.2s;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.borderColor='var(--accent-gold)'" onmouseout="this.style.borderColor='var(--border-color)'">
               🔄 Reset
             </button>
           </div>
 
-          <div id="otpSpark" style="
-            margin-top: 1.5rem;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #ffd369, transparent);
-            border-radius: 2px;
-            opacity: 0;
-            transition: opacity 0.5s;
-          "></div>
+          <div id="otpSpark"></div>
         </div>
       </section>
 
       <!-- SPONSOR JASTIPBYLULUS -->
-      <section id="sponsor" style="
-        margin-top: 3rem;
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #1c2333, #0d1117);
-        border: 2px solid #ffd369;
-        border-radius: 12px;
-        text-align: center;
-      ">
-        <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 0.5rem;">
+      <section id="sponsor">
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
           🤝 Didukung oleh
         </p>
-        <a href="https://jastipbylulus.com" target="_blank" style="
-          display: inline-block;
-          padding: 0.8rem 2rem;
-          background: #ffd369;
-          color: #0d1117;
-          font-weight: 700;
-          font-size: 1.2rem;
-          border-radius: 10px;
-          text-decoration: none;
-          transition: transform 0.2s, box-shadow 0.2s;
-        " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px #ffd369';" 
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+        <a href="https://jastipbylulus.com" target="_blank">
           🛍️ JastipByLulus
         </a>
-        <p style="color: #8b949e; font-size: 0.8rem; margin-top: 0.5rem;">
+        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">
           Jastip terpercaya, aman, dan cepat! 🌟
         </p>
       </section>
