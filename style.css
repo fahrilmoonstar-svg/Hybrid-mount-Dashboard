@@ -529,6 +529,28 @@ h2 {
   border-top: 1px solid #21262d;
 }
 
+/* ================================================================
+   OTP COMPONENT
+   ================================================================ */
+.otp-input:focus {
+  border-color: #ffd369 !important;
+  box-shadow: 0 0 20px rgba(255, 211, 105, 0.2) !important;
+}
+
+.otp-input:hover {
+  border-color: #58a6ff;
+}
+
+@keyframes sparkGlow {
+  0% { opacity: 0; transform: scaleX(0); }
+  50% { opacity: 1; transform: scaleX(1); }
+  100% { opacity: 0; transform: scaleX(0); }
+}
+
+#otpSpark {
+  animation: sparkGlow 0.5s ease-out;
+}
+
 /* Animasi notifikasi */
 @keyframes fadeIn {
   from {
@@ -561,5 +583,10 @@ h2 {
     width: 80px;
     height: 80px;
     font-size: 2rem;
+  }
+  .otp-input {
+    width: 40px !important;
+    height: 50px !important;
+    font-size: 1.2rem !important;
   }
 }

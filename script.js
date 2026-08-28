@@ -96,6 +96,125 @@ document.addEventListener('DOMContentLoaded', () => {
     "Andi"
   ];
 
+  // ========== OTP COMPONENT ==========
+  let otpCode = ['', '', '', '', '', ''];
+
+  function initOTP() {
+    const inputs = document.querySelectorAll('.otp-input');
+    
+    // Fokus ke input pertama
+    if (inputs.length > 0) {
+      setTimeout(() => inputs[0].focus(), 500);
+    }
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', function(e) {
+        const value = e.target.value;
+        
+        // Hanya angka yang boleh
+        if (value && !/^\d$/.test(value)) {
+          e.target.value = '';
+          return;
+        }
+
+        otpCode[index] = e.target.value;
+        
+        // Efek spark
+        const spark = document.getElementById('otpSpark');
+        spark.style.opacity = '1';
+        setTimeout(() => spark.style.opacity = '0', 300);
+
+        // Pindah ke input berikutnya
+        if (value && index < 5) {
+          inputs[index + 1].focus();
+        }
+
+        updateOTPStatus();
+      });
+
+      // Backspace
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+
+      // Efek focus
+      input.addEventListener('focus', function() {
+        this.style.borderColor = '#ffd369';
+        this.style.boxShadow = '0 0 20px rgba(255, 211, 105, 0.2)';
+      });
+
+      input.addEventListener('blur', function() {
+        this.style.borderColor = '#30363d';
+        this.style.boxShadow = 'none';
+      });
+    });
+  }
+
+  function updateOTPStatus() {
+    const status = document.getElementById('otpStatus');
+    const filled = otpCode.filter(d => d !== '').length;
+    
+    if (filled === 6) {
+      status.innerHTML = '✅ Kode lengkap! Klik Verifikasi.';
+      status.style.color = '#3fb950';
+    } else {
+      status.innerHTML = `⏳ ${filled}/6 digit terisi`;
+      status.style.color = '#8b949e';
+    }
+  }
+
+  window.verifyOTP = function() {
+    const code = otpCode.join('');
+    const status = document.getElementById('otpStatus');
+
+    if (code.length < 6) {
+      status.innerHTML = '⚠️ Masukkan kode 6 digit lengkap!';
+      status.style.color = '#f85149';
+      return;
+    }
+
+    // Simulasi verifikasi (contoh: kode 123456)
+    if (code === '123456') {
+      status.innerHTML = '✅✅✅ Verifikasi berhasil! Selamat datang! 🎉';
+      status.style.color = '#3fb950';
+      
+      const spark = document.getElementById('otpSpark');
+      spark.style.opacity = '1';
+      spark.style.background = 'linear-gradient(90deg, transparent, #3fb950, transparent)';
+      setTimeout(() => {
+        spark.style.opacity = '0';
+        spark.style.background = 'linear-gradient(90deg, transparent, #ffd369, transparent)';
+      }, 2000);
+    } else {
+      status.innerHTML = '❌❌❌ Kode salah! Coba lagi.';
+      status.style.color = '#f85149';
+      
+      document.querySelectorAll('.otp-input').forEach(inp => {
+        inp.style.borderColor = '#f85149';
+        inp.style.boxShadow = '0 0 20px rgba(248, 81, 73, 0.3)';
+        setTimeout(() => {
+          inp.style.borderColor = '#30363d';
+          inp.style.boxShadow = 'none';
+        }, 1000);
+      });
+    }
+  };
+
+  window.clearOTP = function() {
+    otpCode = ['', '', '', '', '', ''];
+    document.querySelectorAll('.otp-input').forEach(input => {
+      input.value = '';
+    });
+    const inputs = document.querySelectorAll('.otp-input');
+    if (inputs.length > 0) inputs[0].focus();
+    updateOTPStatus();
+    const status = document.getElementById('otpStatus');
+    status.innerHTML = 'Masukkan kode verifikasi 6 digit';
+    status.style.color = '#8b949e';
+  };
+
   // ========== RENDER CLAN ==========
   function renderClan() {
     const nameEl = document.getElementById('clanName');
@@ -331,6 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
       traffic: document.getElementById('traffic'),
       blacklist: document.getElementById('blacklist'),
       clan: document.getElementById('clan'),
+      otp: document.getElementById('otp'),
     };
 
     tabs.forEach(tab => {
@@ -343,6 +463,11 @@ document.addEventListener('DOMContentLoaded', () => {
             contents[key].classList.toggle('active', key === tab.dataset.tab);
           }
         });
+
+        // Inisialisasi OTP jika tab OTP diaktifkan
+        if (tab.dataset.tab === 'otp') {
+          setTimeout(initOTP, 100);
+        }
       });
     });
   }
@@ -431,5 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html';
       });
     }
+
+    // Inisialisasi OTP
+    initOTP();
   }
 });
