@@ -19,6 +19,7 @@
           <button class="tab-btn" data-tab="otp">🔐 OTP</button>
           <button class="tab-btn" data-tab="security">🔒 Security</button>
           <button class="tab-btn" data-tab="confession">💌 Confession</button>
+          <button class="tab-btn" data-tab="greet">👋 Greet</button>
           <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: var(--accent-gold); color: var(--accent-gold);">
             🔄 Log Modules
           </button>
@@ -317,7 +318,124 @@
         </div>
       </section>
 
-      <!-- SPONSOR JASTIPBYLULUS -->
+      <!-- TAB 8: Greet Function (BARU!) -->
+      <section id="greet" class="tab-content">
+        <h2>👋 Greet Function</h2>
+        <div id="greetContainer" style="
+          background: var(--bg-card);
+          border: 1px solid var(--accent-gold);
+          border-radius: var(--border-radius);
+          padding: 2rem;
+          max-width: 500px;
+          margin: 0 auto;
+          text-align: center;
+          transition: var(--transition-smooth);
+        ">
+          <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">
+            👋 Siapa yang mau disapa?
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Masukkan nama, lalu klik tombol di bawah!
+          </p>
+
+          <!-- OUTPUT -->
+          <div id="greetOutput" style="
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+          ">
+            👤 Silakan masukkan nama...
+          </div>
+
+          <!-- INPUT -->
+          <div style="margin-bottom: 1rem;">
+            <input type="text" id="greetNameInput" placeholder="Masukkan nama..." style="
+              padding: 0.7rem 1rem;
+              background: var(--bg-input);
+              border: 1px solid var(--border-color);
+              border-radius: 8px;
+              color: var(--text-primary);
+              font-size: 1rem;
+              width: 80%;
+              max-width: 300px;
+              outline: none;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            ">
+          </div>
+
+          <!-- BUTTONS -->
+          <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+            <button onclick="greet()" style="
+              padding: 0.7rem 1.5rem;
+              background: var(--gradient-primary);
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              font-size: 0.95rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+              💬 Greet Me
+            </button>
+            <button onclick="greetCustom()" style="
+              padding: 0.7rem 1.5rem;
+              background: var(--accent-gold);
+              color: var(--bg-primary);
+              border: none;
+              border-radius: 8px;
+              font-size: 0.95rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+              ✨ Custom
+            </button>
+            <button onclick="greetRandom()" style="
+              padding: 0.7rem 1.5rem;
+              background: var(--bg-input);
+              color: var(--text-secondary);
+              border: 1px solid var(--border-color);
+              border-radius: 8px;
+              font-size: 0.95rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.borderColor='var(--accent-gold)'" onmouseout="this.style.borderColor='var(--border-color)'">
+              🎲 Random
+            </button>
+            <button onclick="resetGreeting()" style="
+              padding: 0.7rem 1.5rem;
+              background: var(--accent-red);
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              font-size: 0.95rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: var(--transition-smooth);
+              font-family: inherit;
+            " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+              🔄 Reset
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPONSOR -->
       <section id="sponsor">
         <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">
           🤝 Didukung oleh

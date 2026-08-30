@@ -10,13 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const togglePass = document.getElementById('togglePass');
   const messageEl = document.getElementById('message');
 
-  // Cek session: kalo udah login, langsung ke dashboard
+  // Cek session
   if (localStorage.getItem('isLoggedIn') === 'true') {
     window.location.href = 'dashboard.html';
     return;
   }
 
-  // Toggle password visibility
   if (togglePass) {
     togglePass.addEventListener('click', () => {
       const isPassword = passwordInput.type === 'password';
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Handle login submit
   if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -42,14 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Validasi login (default: admin/admin123)
       if (username === 'admin' && password === 'admin123') {
         messageEl.textContent = '✅ Login berhasil! Mengalihkan...';
         messageEl.className = 'message success';
-
-        // Simpan session
         localStorage.setItem('isLoggedIn', 'true');
-
         setTimeout(() => {
           window.location.href = 'dashboard.html';
         }, 1000);
@@ -63,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ================================================================
   // DASHBOARD
   // ================================================================
-  // Cek session: kalo belum login, balik ke halaman login
   if (window.location.pathname.includes('dashboard.html')) {
     if (localStorage.getItem('isLoggedIn') !== 'true') {
       window.location.href = 'index.html';
@@ -461,6 +454,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ========== GREET FUNCTION (BARU!) ==========
+  window.greet = function() {
+    const output = document.getElementById('greetOutput');
+    const input = document.getElementById('greetNameInput');
+    const name = input.value.trim();
+
+    if (name === '') {
+      output.innerHTML = '⚠️ <span style="color: var(--accent-red);">Nama tidak boleh kosong!</span>';
+      output.className = 'glow';
+      return;
+    }
+
+    output.innerHTML = `👋 Halo, <strong style="color: var(--accent-gold);">${name}</strong>! Selamat datang! 😊`;
+    output.className = 'glow';
+  };
+
+  window.greetCustom = function() {
+    const output = document.getElementById('greetOutput');
+    const input = document.getElementById('greetNameInput');
+    const name = input.value.trim() || 'Sahabat';
+
+    const messages = [
+      `🌟 Selamat pagi, <strong style="color: var(--accent-gold);">${name}</strong>! Semoga hari mu cerah! ☀️`,
+      `🌙 Selamat malam, <strong style="color: var(--accent-blue);">${name}</strong>! Istirahat yang nyenyak! 🌙`,
+      `💪 Halo <strong style="color: var(--accent-green);">${name}</strong>! Kamu hebat, jangan lupa minum jamu! 🍵`,
+      `🎉 Hai <strong style="color: var(--accent-yellow);">${name}</strong>! Hari ini kamu keren banget! 🔥`,
+      `💖 <strong style="color: var(--accent-gold);">${name}</strong>... senyuman mu bikin hari ini lebih indah! 🤍`
+    ];
+
+    const random = Math.floor(Math.random() * messages.length);
+    output.innerHTML = messages[random];
+    output.className = 'glow';
+  };
+
+  window.greetRandom = function() {
+    const output = document.getElementById('greetOutput');
+    const input = document.getElementById('greetNameInput');
+    const names = ['Kunyukk', 'Riped', 'Sahabat', 'Pejuang Subuh', 'Anak Nusantara'];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    input.value = randomName;
+
+    output.innerHTML = `🎲 <strong style="color: var(--accent-gold);">${randomName}</strong>! Kamu terpilih! Selamat! 🏆`;
+    output.className = 'glow';
+  };
+
+  window.resetGreeting = function() {
+    const output = document.getElementById('greetOutput');
+    const input = document.getElementById('greetNameInput');
+    input.value = '';
+    output.innerHTML = '👤 Silakan masukkan nama...';
+    output.className = '';
+  };
+
+  function initGreet() {
+    const input = document.getElementById('greetNameInput');
+    if (!input) return;
+    
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        window.greet();
+      }
+    });
+
+    setTimeout(() => input.focus(), 500);
+  }
+
   // ========== RENDER FUNCTIONS ==========
   function renderClan() {
     const nameEl = document.getElementById('clanName');
@@ -693,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
       otp: document.getElementById('otp'),
       security: document.getElementById('security'),
       confession: document.getElementById('confession'),
+      greet: document.getElementById('greet'),
     };
 
     tabs.forEach(tab => {
@@ -711,6 +771,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (tab.dataset.tab === 'security') {
           setTimeout(initSecurityLock, 100);
+        }
+        if (tab.dataset.tab === 'greet') {
+          setTimeout(initGreet, 100);
         }
       });
     });
@@ -767,6 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTrafficLight('hijau');
     initOTP();
     initSecurityLock();
+    initGreet();
 
     document.querySelectorAll('.btn[data-color]').forEach(btn => {
       btn.addEventListener('click', (e) => {

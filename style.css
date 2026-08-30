@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-only */
 
 /* ================================================================
-   ROOT VARIABLES (WARNA GLOBAL)
+   ROOT VARIABLES
    ================================================================ */
 :root {
   --bg-primary: #0a0e14;
@@ -725,7 +725,7 @@ main {
 }
 
 /* ================================================================
-   OTP COMPONENT
+   OTP
    ================================================================ */
 #otpContainer {
   background: var(--bg-card);
@@ -855,7 +855,7 @@ main {
 }
 
 /* ================================================================
-   CONFESSION COMPONENT
+   CONFESSION
    ================================================================ */
 #confessionContainer:hover {
   box-shadow: var(--shadow-glow);
@@ -863,6 +863,27 @@ main {
 
 #confessionDisplay {
   transition: opacity 0.3s ease;
+}
+
+/* ================================================================
+   GREET FUNCTION (BARU!)
+   ================================================================ */
+#greetContainer:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+#greetOutput {
+  transition: all 0.3s ease;
+}
+
+#greetOutput.glow {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 20px rgba(255, 211, 105, 0.15);
+}
+
+#greetNameInput:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
 }
 
 /* Animasi confetti */
@@ -976,6 +997,10 @@ main {
   }
   
   #confessionContainer {
+    padding: 1rem;
+  }
+  
+  #greetContainer {
     padding: 1rem;
   }
 }
