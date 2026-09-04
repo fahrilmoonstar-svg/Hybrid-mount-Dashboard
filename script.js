@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const togglePass = document.getElementById('togglePass');
   const messageEl = document.getElementById('message');
 
-  // Cek session
   if (localStorage.getItem('isLoggedIn') === 'true') {
     window.location.href = 'dashboard.html';
     return;
@@ -454,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ========== GREET FUNCTION (BARU!) ==========
+  // ========== GREET FUNCTION ==========
   window.greet = function() {
     const output = document.getElementById('greetOutput');
     const input = document.getElementById('greetNameInput');
@@ -518,6 +517,161 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     setTimeout(() => input.focus(), 500);
+  }
+
+  // ========== CMS (CONTENT MANAGEMENT SYSTEM) ==========
+  let cmsData = {
+    ugc: JSON.parse(localStorage.getItem('cms_ugc')) || [],
+    photoshoot: JSON.parse(localStorage.getItem('cms_photoshoot')) || [],
+    unboxing: JSON.parse(localStorage.getItem('cms_unboxing')) || [],
+    smoke: JSON.parse(localStorage.getItem('cms_smoke')) || [],
+  };
+
+  let currentCMSForm = null;
+
+  function renderCMSItems() {
+    const container = document.getElementById('cmsItems');
+    let allItems = [];
+
+    // Gabungkan semua data
+    Object.keys(cmsData).forEach(key => {
+      cmsData[key].forEach(item => {
+        allItems.push({
+          ...item,
+          type: key,
+          typeLabel: {
+            ugc: '📦 UGC Product',
+            photoshoot: '📸 Photoshoot AD',
+            unboxing: '📦 Unboxing',
+            smoke: '💨 Smoke Reveal'
+          }[key] || key
+        });
+      });
+    });
+
+    if (allItems.length === 0) {
+      container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">Belum ada konten. Tambahkan sekarang!</p>';
+      return;
+    }
+
+    container.innerHTML = allItems.map((item, index) => `
+      <div class="cms-item">
+        <div class="cms-info">
+          <h5>${item.title || 'Untitled'}</h5>
+          <p>${item.typeLabel} • ${item.createdAt ? new Date(item.createdAt).toLocaleDateString('id-ID') : 'Baru'}</p>
+        </div>
+        <div class="cms-actions">
+          <button class="delete-btn" onclick="deleteCMSItem('${item.type}', ${index})">✕</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.showCMSForm = function(type) {
+    currentCMSForm = type;
+    const form = document.getElementById('cmsForm');
+    const title = document.getElementById('cmsFormTitle');
+    const fields = document.getElementById('cmsFormFields');
+
+    const typeLabels = {
+      ugc: '📦 UGC Product',
+      photoshoot: '📸 Photoshoot AD',
+      unboxing: '📦 Unboxing',
+      smoke: '💨 Smoke Reveal'
+    };
+
+    title.textContent = `Tambah Konten - ${typeLabels[type] || type}`;
+
+    const fieldConfigs = {
+      ugc: [
+        { label: 'Nama Produk', id: 'ugc_name', type: 'text' },
+        { label: 'Deskripsi', id: 'ugc_desc', type: 'text' },
+        { label: 'Harga', id: 'ugc_price', type: 'text' },
+      ],
+      photoshoot: [
+        { label: 'Judul Foto', id: 'photo_title', type: 'text' },
+        { label: 'Fotografer', id: 'photo_photographer', type: 'text' },
+        { label: 'Deskripsi', id: 'photo_desc', type: 'text' },
+      ],
+      unboxing: [
+        { label: 'Judul Video', id: 'unbox_title', type: 'text' },
+        { label: 'Nama Produk', id: 'unbox_product', type: 'text' },
+        { label: 'Deskripsi', id: 'unbox_desc', type: 'text' },
+      ],
+      smoke: [
+        { label: 'Judul Proyek', id: 'smoke_title', type: 'text' },
+        { label: 'Jenis Efek', id: 'smoke_effect', type: 'text' },
+        { label: 'Deskripsi', id: 'smoke_desc', type: 'text' },
+      ],
+    };
+
+    const config = fieldConfigs[type] || [];
+    fields.innerHTML = config.map(field => `
+      <div style="margin-bottom: 0.5rem;">
+        <label style="color: var(--text-secondary); font-size: 0.8rem; display: block; margin-bottom: 0.2rem;">${field.label}</label>
+        <input type="${field.type}" id="${field.id}" placeholder="${field.label}..." style="
+          width: 100%;
+          padding: 0.5rem;
+          background: var(--bg-input);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          color: var(--text-primary);
+          outline: none;
+          transition: var(--transition-smooth);
+          font-family: inherit;
+        ">
+      </div>
+    `).join('');
+
+    form.style.display = 'block';
+    form.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  window.hideCMSForm = function() {
+    document.getElementById('cmsForm').style.display = 'none';
+    currentCMSForm = null;
+  };
+
+  window.saveCMSContent = function() {
+    if (!currentCMSForm) return;
+
+    const type = currentCMSForm;
+    let newItem = { id: Date.now(), createdAt: new Date().toISOString() };
+
+    const fieldMappings = {
+      ugc: { name: 'ugc_name', title: 'ugc_name', price: 'ugc_price', description: 'ugc_desc' },
+      photoshoot: { title: 'photo_title', photographer: 'photo_photographer', description: 'photo_desc' },
+      unboxing: { title: 'unbox_title', product: 'unbox_product', description: 'unbox_desc' },
+      smoke: { title: 'smoke_title', effectType: 'smoke_effect', description: 'smoke_desc' },
+    };
+
+    const mapping = fieldMappings[type] || {};
+    Object.keys(mapping).forEach(key => {
+      const el = document.getElementById(mapping[key]);
+      if (el) newItem[key] = el.value.trim() || '-';
+    });
+
+    if (!newItem.title && !newItem.name) {
+      alert('⚠️ Judul / Nama harus diisi!');
+      return;
+    }
+
+    cmsData[type].push(newItem);
+    localStorage.setItem(`cms_${type}`, JSON.stringify(cmsData[type]));
+    renderCMSItems();
+    hideCMSForm();
+  };
+
+  window.deleteCMSItem = function(type, index) {
+    if (confirm(`Hapus konten ini?`)) {
+      cmsData[type].splice(index, 1);
+      localStorage.setItem(`cms_${type}`, JSON.stringify(cmsData[type]));
+      renderCMSItems();
+    }
+  };
+
+  function initCMS() {
+    renderCMSItems();
   }
 
   // ========== RENDER FUNCTIONS ==========
@@ -753,6 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
       security: document.getElementById('security'),
       confession: document.getElementById('confession'),
       greet: document.getElementById('greet'),
+      cms: document.getElementById('cms'),
     };
 
     tabs.forEach(tab => {
@@ -774,6 +929,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (tab.dataset.tab === 'greet') {
           setTimeout(initGreet, 100);
+        }
+        if (tab.dataset.tab === 'cms') {
+          setTimeout(initCMS, 100);
         }
       });
     });
@@ -831,6 +989,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initOTP();
     initSecurityLock();
     initGreet();
+    initCMS();
 
     document.querySelectorAll('.btn[data-color]').forEach(btn => {
       btn.addEventListener('click', (e) => {

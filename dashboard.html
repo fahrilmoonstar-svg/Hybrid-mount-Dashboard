@@ -20,6 +20,7 @@
           <button class="tab-btn" data-tab="security">🔒 Security</button>
           <button class="tab-btn" data-tab="confession">💌 Confession</button>
           <button class="tab-btn" data-tab="greet">👋 Greet</button>
+          <button class="tab-btn" data-tab="cms">📸 CMS</button>
           <button id="loopModulesBtn" class="tab-btn" style="border-bottom-color: var(--accent-gold); color: var(--accent-gold);">
             🔄 Log Modules
           </button>
@@ -318,7 +319,7 @@
         </div>
       </section>
 
-      <!-- TAB 8: Greet Function (BARU!) -->
+      <!-- TAB 8: Greet Function -->
       <section id="greet" class="tab-content">
         <h2>👋 Greet Function</h2>
         <div id="greetContainer" style="
@@ -338,7 +339,6 @@
             Masukkan nama, lalu klik tombol di bawah!
           </p>
 
-          <!-- OUTPUT -->
           <div id="greetOutput" style="
             background: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -356,7 +356,6 @@
             👤 Silakan masukkan nama...
           </div>
 
-          <!-- INPUT -->
           <div style="margin-bottom: 1rem;">
             <input type="text" id="greetNameInput" placeholder="Masukkan nama..." style="
               padding: 0.7rem 1rem;
@@ -373,7 +372,6 @@
             ">
           </div>
 
-          <!-- BUTTONS -->
           <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
             <button onclick="greet()" style="
               padding: 0.7rem 1.5rem;
@@ -431,6 +429,74 @@
             " onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
               🔄 Reset
             </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 9: CMS (Content Management System) -->
+      <section id="cms" class="tab-content">
+        <h2>📸 Content Management System</h2>
+        <div id="cmsContainer" style="
+          background: var(--bg-card);
+          border: 1px solid var(--accent-gold);
+          border-radius: var(--border-radius);
+          padding: 2rem;
+          max-width: 800px;
+          margin: 0 auto;
+          transition: var(--transition-smooth);
+        ">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+            <!-- UGC Product Hook -->
+            <div style="background: var(--bg-input); border-radius: 8px; padding: 1rem; border-left: 4px solid #ff6b6b;">
+              <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">📦 UGC Product</h4>
+              <p style="color: var(--text-secondary); font-size: 0.8rem;">/ugcproducthook</p>
+              <button onclick="showCMSForm('ugc')" style="margin-top: 0.5rem; padding: 0.3rem 1rem; background: var(--accent-blue); color: #fff; border: none; border-radius: 4px; cursor: pointer;">Tambah</button>
+            </div>
+
+            <!-- Photoshoot AD -->
+            <div style="background: var(--bg-input); border-radius: 8px; padding: 1rem; border-left: 4px solid #ffd369;">
+              <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">📸 Photoshoot AD</h4>
+              <p style="color: var(--text-secondary); font-size: 0.8rem;">/photoshootad</p>
+              <button onclick="showCMSForm('photoshoot')" style="margin-top: 0.5rem; padding: 0.3rem 1rem; background: var(--accent-blue); color: #fff; border: none; border-radius: 4px; cursor: pointer;">Tambah</button>
+            </div>
+
+            <!-- Unboxing -->
+            <div style="background: var(--bg-input); border-radius: 8px; padding: 1rem; border-left: 4px solid #58a6ff;">
+              <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">📦 Unboxing</h4>
+              <p style="color: var(--text-secondary); font-size: 0.8rem;">/unboxing</p>
+              <button onclick="showCMSForm('unboxing')" style="margin-top: 0.5rem; padding: 0.3rem 1rem; background: var(--accent-blue); color: #fff; border: none; border-radius: 4px; cursor: pointer;">Tambah</button>
+            </div>
+
+            <!-- Smoke Reveal -->
+            <div style="background: var(--bg-input); border-radius: 8px; padding: 1rem; border-left: 4px solid #3fb950;">
+              <h4 style="color: var(--text-primary); margin-bottom: 0.3rem;">💨 Smoke Reveal</h4>
+              <p style="color: var(--text-secondary); font-size: 0.8rem;">/smokereveal</p>
+              <button onclick="showCMSForm('smoke')" style="margin-top: 0.5rem; padding: 0.3rem 1rem; background: var(--accent-blue); color: #fff; border: none; border-radius: 4px; cursor: pointer;">Tambah</button>
+            </div>
+          </div>
+
+          <!-- FORM TAMBAH KONTEN -->
+          <div id="cmsForm" style="display: none; background: var(--bg-input); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color);">
+            <h4 id="cmsFormTitle" style="color: var(--text-primary); margin-bottom: 1rem;">Tambah Konten</h4>
+            <div id="cmsFormFields"></div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+              <button onclick="saveCMSContent()" style="padding: 0.5rem 1.5rem; background: var(--accent-green); color: #fff; border: none; border-radius: 6px; cursor: pointer;">💾 Simpan</button>
+              <button onclick="hideCMSForm()" style="padding: 0.5rem 1.5rem; background: var(--bg-input); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer;">❌ Batal</button>
+            </div>
+          </div>
+
+          <!-- LIST KONTEN -->
+          <div id="cmsContentList">
+            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">📋 Daftar Konten</h4>
+            <div id="cmsItems" style="
+              max-height: 300px;
+              overflow-y: auto;
+              background: var(--bg-input);
+              border-radius: 8px;
+              padding: 0.5rem;
+            ">
+              <p style="color: var(--text-secondary); text-align: center; padding: 1rem;">Belum ada konten. Tambahkan sekarang!</p>
+            </div>
           </div>
         </div>
       </section>
